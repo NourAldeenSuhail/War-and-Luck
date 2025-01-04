@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (randomButton.classList.contains('red') || randomButton.classList.contains('blue')) {
             randomButton.classList.remove(currentPlayer);
             randomButton.classList.add('yellow');
-            statusBox.textContent = 'إطلاق الضربة';
+            statusBox.textContent = 'Launching...';
             let selectedGrid = currentPlayer === 'red' ? grid1 : grid2;
             let availableCells = currentPlayer === 'red' ? availableCells1 : availableCells2;
             let lastSelectedIndex;
@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 randomButton.classList.remove('yellow');
                 currentPlayer = currentPlayer === 'red' ? 'blue' : 'red';
                 randomButton.classList.add(currentPlayer);
-                statusBox.textContent = `دور اللاعب ${currentPlayer === 'red' ? 'الأحمر' : 'الأزرق'}`;
-            }, 8000);
+                statusBox.textContent = `${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)} Player's Turn`;
+            }, 30000);
         } else if (randomButton.classList.contains('yellow')) {
             clearInterval(interval);
             let selectedGrid = currentPlayer === 'red' ? grid1 : grid2;
@@ -67,15 +67,15 @@ document.addEventListener('DOMContentLoaded', () => {
             randomButton.classList.remove('yellow');
             currentPlayer = currentPlayer === 'red' ? 'blue' : 'red';
             randomButton.classList.add(currentPlayer);
-            statusBox.textContent = `دور اللاعب ${currentPlayer === 'red' ? 'الأحمر' : 'الأزرق'}`;
+            statusBox.textContent = `${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)} Player's Turn`;
         }
     });
 
     restartButton.addEventListener('click', () => {
         clearInterval(interval);
-        randomButton.className = 'red';
-        statusBox.className = 'red';
-        statusBox.textContent = 'دور اللاعب الأحمر';
+        randomButton.className = 'button red';
+        statusBox.className = 'status-box';
+        statusBox.textContent = "Red Player's Turn";
         currentPlayer = 'red';
         availableCells1 = Array.from({ length: 20 }, (_, i) => i);
         availableCells2 = Array.from({ length: 20 }, (_, i) => i);

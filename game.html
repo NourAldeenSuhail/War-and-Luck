@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة المربعات</title>
+    <title>Dots and Boxes Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="statusBox" class="status-box">Red Player's Turn</div>
     <div class="container">
         <div class="play-area">
-            <div class="label red">أرض اللعب الأحمر</div>
+            <div class="label red">Red Player's Area</div>
             <div class="grid" id="grid1"></div>
         </div>
         <div class="play-area">
-            <div class="label blue">أرض اللعب الأزرق</div>
+            <div class="label blue">Blue Player's Area</div>
             <div class="grid" id="grid2"></div>
         </div>
-        <button id="randomButton" class="red">اختر مربع عشوائي</button>
-        <div id="statusBox" class="red">دور اللاعب الأحمر</div>
-        <button id="restartButton">إعادة اللعبة</button>
+        <button id="randomButton" class="button red">Select Random Box</button>
+        <button id="restartButton" class="button">Restart Game</button>
     </div>
     <script src="script.js"></script>
 </body>
