@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 selectedDiv.style.backgroundColor = 'gray';
                 lastSelectedIndex = randomIndex;
-            }, 100);
+            }, 400);
 
             countdownInterval = setInterval(() => {
                 countdownTime--;
