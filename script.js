@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentPlayer = currentPlayer === 'red' ? 'blue' : 'red';
                 randomButton.classList.add(currentPlayer);
                 statusBox.textContent = `${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)} Player's Turn`;
-            }, 30000);
+            }, 15000);
         } else if (randomButton.classList.contains('yellow')) {
             clearInterval(interval);
             let selectedGrid = currentPlayer === 'red' ? grid1 : grid2;
@@ -65,9 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 availableCells.splice(lastSelectedIndex, 1);
             }
             randomButton.classList.remove('yellow');
-            currentPlayer = currentPlayer === 'red' ? 'blue' : 'red';
-            randomButton.classList.add(currentPlayer);
-            statusBox.textContent = `${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)} Player's Turn`;
+            setTimeout(() => {
+                currentPlayer = currentPlayer === 'red' ? 'blue' : 'red';
+                randomButton.classList.add(currentPlayer);
+                statusBox.textContent = `${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)} Player's Turn`;
+            }, 2000);
         }
     });
 
