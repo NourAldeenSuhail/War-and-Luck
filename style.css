@@ -1,0 +1,66 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.grid div {
+    width: 50px;
+    height: 50px;
+    background-color: lightgreen;
+    border: 1px solid #ccc;
+}
+
+.separator {
+    height: 10px;
+    background-color: black;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.red {
+    background-color: red;
+    color: white;
+}
+
+.yellow {
+    background-color: yellow;
+    color: black;
+}
+
+.blue {
+    background-color: blue;
+    color: white;
+}
+
+#statusBox {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+}
+
+#restartButton {
+    background-color: gray;
+    color: white;
+}
