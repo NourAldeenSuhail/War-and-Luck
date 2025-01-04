@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartButton = document.getElementById('restartButton');
     let currentPlayer = 'red';
     let interval;
+    let availableCells1 = Array.from({ length: 20 }, (_, i) => i);
+    let availableCells2 = Array.from({ length: 20 }, (_, i) => i);
 
     // Create grids
     for (let i = 0; i < 20; i++) {
@@ -19,21 +21,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     randomButton.addEventListener('click', () => {
-        if (randomButton.classList.contains('red')) {
-            randomButton.classList.remove('red');
+        if (randomButton.classList.contains('red') || randomButton.classList.contains('blue')) {
+            randomButton.classList.remove(currentPlayer);
             randomButton.classList.add('yellow');
             statusBox.textContent = 'إطلاق الضربة';
+            let selectedGrid = currentPlayer === 'red' ? grid1 : grid2;
+            let availableCells = currentPlayer === 'red' ? availableCells1 : availableCells2;
+            let lastSelectedIndex;
+
             interval = setInterval(() => {
-                const randomIndex = Math.floor(Math.random() * 20);
-                const selectedGrid = currentPlayer === 'red' ? grid1 : grid2;
-                const selectedDiv = selectedGrid.querySelector(`#${selectedGrid.id}-${randomIndex}`);
+                if (availableCells.length === 0) {
+                    clearInterval(interval);
+                    return;
+                }
+                const randomIndex = Math.floor(Math.random() * availableCells.length);
+                const selectedDiv = selectedGrid.querySelector(`#${selectedGrid.id}-${availableCells[randomIndex]}`);
+                if (lastSelectedIndex !== undefined) {
+                    selectedGrid.querySelector(`#${selectedGrid.id}-${availableCells[lastSelectedIndex]}`).style.backgroundColor = 'lightgreen';
+                }
                 selectedDiv.style.backgroundColor = 'gray';
+                lastSelectedIndex = randomIndex;
             }, 100);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                if (lastSelectedIndex !== undefined) {
+                    const finalDiv = selectedGrid.querySelector(`#${selectedGrid.id}-${availableCells[lastSelectedIndex]}`);
+                    finalDiv.style.backgroundColor = 'gray';
+                    availableCells.splice(lastSelectedIndex, 1);
+                }
+                randomButton.classList.remove('yellow');
+                currentPlayer = currentPlayer === 'red' ? 'blue' : 'red';
+                randomButton.classList.add(currentPlayer);
+                statusBox.textContent = `دور اللاعب ${currentPlayer === 'red' ? 'الأحمر' : 'الأزرق'}`;
+            }, 8000);
         } else if (randomButton.classList.contains('yellow')) {
             clearInterval(interval);
+            let selectedGrid = currentPlayer === 'red' ? grid1 : grid2;
+            let availableCells = currentPlayer === 'red' ? availableCells1 : availableCells2;
+            if (lastSelectedIndex !== undefined) {
+                const finalDiv = selectedGrid.querySelector(`#${selectedGrid.id}-${availableCells[lastSelectedIndex]}`);
+                finalDiv.style.backgroundColor = 'gray';
+                availableCells.splice(lastSelectedIndex, 1);
+            }
             randomButton.classList.remove('yellow');
-            randomButton.classList.add(currentPlayer === 'red' ? 'blue' : 'red');
             currentPlayer = currentPlayer === 'red' ? 'blue' : 'red';
+            randomButton.classList.add(currentPlayer);
             statusBox.textContent = `دور اللاعب ${currentPlayer === 'red' ? 'الأحمر' : 'الأزرق'}`;
         }
     });
@@ -44,6 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
         statusBox.className = 'red';
         statusBox.textContent = 'دور اللاعب الأحمر';
         currentPlayer = 'red';
+        availableCells1 = Array.from({ length: 20 }, (_, i) => i);
+        availableCells2 = Array.from({ length: 20 }, (_, i) => i);
         document.querySelectorAll('.grid div').forEach(div => {
             div.style.backgroundColor = 'lightgreen';
         });

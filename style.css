@@ -2,13 +2,25 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 100vh; */
+    /* height: 100vh;لهف */
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
 }
 
 .container {
     text-align: center;
+}
+
+.play-area {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+.label {
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 18px;
+    border: 1px solid #ccc;
 }
 
 .grid {
@@ -23,12 +35,6 @@ body {
     height: 50px;
     background-color: lightgreen;
     border: 1px solid #ccc;
-}
-
-.separator {
-    height: 10px;
-    background-color: black;
-    margin-bottom: 20px;
 }
 
 button {
