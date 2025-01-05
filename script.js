@@ -114,34 +114,6 @@ function switchPlayer() {
     }
 }
 
-// Function to handle random selection phase
-function handleRandomSelection() {
-    let selectedGrid = currentPlayer === 'red' ? grid1 : grid2;
-    let availableCells = currentPlayer === 'red' ? availableCells1 : availableCells2;
-    let selectedCells = currentPlayer === 'red' ? selectedCells1 : selectedCells2;
-    let scoreElement = currentPlayer === 'red' ? redScoreElement : blueScoreElement;
-    let score = currentPlayer === 'red' ? redScore : blueScore;
-
-    interval = setInterval(() => {
-        if (availableCells.length === 0) {
-            clearInterval(interval);
-            return;
-        }
-        const randomIndex = Math.floor(Math.random() * availableCells.length);
-        const selectedDiv = selectedGrid.querySelector(`#${selectedGrid.id}-${availableCells[randomIndex]}`);
-        if (selectedCells.includes(availableCells[randomIndex].toString())) {
-            selectedDiv.style.backgroundColor = 'gray';
-            score--;
-            scoreElement.textContent = score;
-            if (score === 0) {
-                statusBox.textContent = `${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)} Player Loses!`;
-                clearInterval(interval);
-                return;
-            }
-        }
-        availableCells.splice(randomIndex, 1);
-    }, 400);
-}
 
 // Initialize the game with red player's build phase
 handleBuildPhase();
