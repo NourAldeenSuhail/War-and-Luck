@@ -126,26 +126,26 @@ document.addEventListener("DOMContentLoaded", () => {
   function switchTurn() {
     clearInterval(interval);
     clearInterval(countdownInterval);
-    let selectedGrid = currentPlayer === "red" ? grid1 : grid2;
+    let selectedGrid = currentPlayer === "red" ? grid2 : grid1; // تعديل الساحة للاختيار العشوائي
     let availableCells =
-      currentPlayer === "red" ? availableCells1 : availableCells2;
+      currentPlayer === "red" ? availableCells2 : availableCells1; // تعديل الساحة للاختيار العشوائي
     if (lastSelectedIndex !== undefined) {
       const finalDiv = selectedGrid.querySelector(
         `#${selectedGrid.id}-${availableCells[lastSelectedIndex]}`
       );
       finalDiv.style.backgroundColor = "gray";
       availableCells.splice(lastSelectedIndex, 1);
-
+  
       // Check if the selected cell contains a letter
       if (finalDiv.textContent) {
         if (currentPlayer === "red") {
-          redScore--;
-          redScoreElement.textContent = redScore;
-        } else {
-          blueScore--;
+          blueScore--; // خصم النقطة من اللاعب الثاني
           blueScoreElement.textContent = blueScore;
+        } else {
+          redScore--; // خصم النقطة من اللاعب الثاني
+          redScoreElement.textContent = redScore;
         }
-
+  
         // Check if any player has lost
         if (redScore === 0 || blueScore === 0) {
           const winner = redScore === 0 ? "Blue" : "Red";
@@ -167,7 +167,8 @@ document.addEventListener("DOMContentLoaded", () => {
       countdownTime = 15;
     }, 2000);
   }
-
+  
+  
   randomButton.addEventListener("click", () => {
     if (
       randomButton.classList.contains("red") ||
@@ -176,10 +177,10 @@ document.addEventListener("DOMContentLoaded", () => {
       randomButton.classList.remove(currentPlayer);
       randomButton.classList.add("yellow");
       statusBox.textContent = `Launching... ${countdownTime}s`;
-      let selectedGrid = currentPlayer === "red" ? grid1 : grid2;
+      let selectedGrid = currentPlayer === "red" ? grid2 : grid1; // تعديل الساحة للاختيار العشوائي
       let availableCells =
-        currentPlayer === "red" ? availableCells1 : availableCells2;
-
+        currentPlayer === "red" ? availableCells2 : availableCells1; // تعديل الساحة للاختيار العشوائي
+  
       interval = setInterval(() => {
         if (availableCells.length === 0) {
           clearInterval(interval);
@@ -197,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedDiv.style.backgroundColor = "gray";
         lastSelectedIndex = randomIndex;
       }, 400);
-
+  
       countdownInterval = setInterval(() => {
         countdownTime--;
         statusBox.textContent = `Launching... ${countdownTime}s`;
@@ -209,6 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
       switchTurn();
     }
   });
+  
 
   restartButton.addEventListener("click", () => {
     clearInterval(interval);
