@@ -11,8 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let availableCells1 = Array.from({ length: 20 }, (_, i) => i);
     let availableCells2 = Array.from({ length: 20 }, (_, i) => i);
     let lastSelectedIndex;
-
-    // Create grids
+    const buildButton = document.getElementById('buildButton');
+    let selectedCells1 = [];
+    let selectedCells2 = [];
+    const letters = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 'd'];
+    const redScoreElement = document.getElementById('redScore');
+    const blueScoreElement = document.getElementById('blueScore');
+    let redScore = 6;
+    let blueScore = 6;
+    
+    
+// Create grids
     for (let i = 0; i < 20; i++) {
         const div1 = document.createElement('div');
         div1.id = `grid1-${i}`;
@@ -22,6 +31,130 @@ document.addEventListener('DOMContentLoaded', () => {
         div2.id = `grid2-${i}`;
         grid2.appendChild(div2);
     }
+
+
+// Function to handle building phase
+function handleBuildPhase() {
+    let selectedCells = currentPlayer === 'red' ? selectedCells1 : selectedCells2;
+    let availableCells = currentPlayer === 'red' ? availableCells1 : availableCells2;
+    let selectedGrid = currentPlayer === 'red' ? grid1 : grid2;
+
+    selectedGrid.addEventListener('click', function selectCell(event) {
+        if (event.target.style.backgroundColor !== 'gray' && selectedCells.length < 6 && !event.target.classList.contains('disabled')) {
+            let randomLetter = letters[Math.floor(Math.random() * letters.length)];
+            event.target.textContent = randomLetter;
+            event.target.classList.add('disabled');
+            selectedCells.push(event.target.id.split('-')[1]);
+            availableCells.splice(availableCells.indexOf(parseInt(event.target.id.split('-')[1])), 1);
+        }
+        if (selectedCells.length === 6) {
+            selectedGrid.removeEventListener('click', selectCell);
+            disableGrid(selectedGrid);
+            switchPlayer();
+        }
+    });
+    enableGrid(selectedGrid);
+}
+
+
+// Function to handle building phase
+function handleBuildPhase() {
+    let selectedCells = currentPlayer === 'red' ? selectedCells1 : selectedCells2;
+    let availableCells = currentPlayer === 'red' ? availableCells1 : availableCells2;
+    let selectedGrid = currentPlayer === 'red' ? grid1 : grid2;
+
+    selectedGrid.addEventListener('click', function selectCell(event) {
+        if (event.target.style.backgroundColor !== 'gray' && selectedCells.length < 6 && !event.target.classList.contains('disabled')) {
+            let randomLetter = letters[Math.floor(Math.random() * letters.length)];
+            event.target.textContent = randomLetter;
+            event.target.classList.add('disabled');
+            selectedCells.push(event.target.id.split('-')[1]);
+            availableCells.splice(availableCells.indexOf(parseInt(event.target.id.split('-')[1])), 1);
+        }
+        if (selectedCells.length === 6) {
+            selectedGrid.removeEventListener('click', selectCell);
+            disableGrid(selectedGrid);
+            switchPlayer();
+        }
+    });
+    enableGrid(selectedGrid);
+}
+
+// Function to enable grid for current player
+function enableGrid(grid) {
+    grid.querySelectorAll('div').forEach(cell => {
+        if (!cell.classList.contains('disabled')) {
+            cell.classList.remove('disabled');
+            cell.style.pointerEvents = 'auto';
+        }
+    });
+}
+
+// Function to disable grid
+function disableGrid(grid) {
+    grid.querySelectorAll('div').forEach(cell => {
+        cell.classList.add('disabled');
+        cell.style.pointerEvents = 'none';
+    });
+}
+
+// Function to switch player
+function switchPlayer() {
+    currentPlayer = currentPlayer === 'red' ? 'blue' : 'red';
+    statusBox.textContent = `${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)} Player's Turn to Build`;
+    if (currentPlayer === 'blue') {
+        buildButton.classList.remove('red');
+        buildButton.classList.add('blue');
+        enableGrid(grid2);
+        handleBuildPhase();
+    } else {
+        buildButton.style.display = 'none';
+        randomButton.style.display = 'inline-block';
+        statusBox.textContent = "Red Player's Turn";
+    }
+}
+
+// Function to handle random selection phase
+function handleRandomSelection() {
+    let selectedGrid = currentPlayer === 'red' ? grid1 : grid2;
+    let availableCells = currentPlayer === 'red' ? availableCells1 : availableCells2;
+    let selectedCells = currentPlayer === 'red' ? selectedCells1 : selectedCells2;
+    let scoreElement = currentPlayer === 'red' ? redScoreElement : blueScoreElement;
+    let score = currentPlayer === 'red' ? redScore : blueScore;
+
+    interval = setInterval(() => {
+        if (availableCells.length === 0) {
+            clearInterval(interval);
+            return;
+        }
+        const randomIndex = Math.floor(Math.random() * availableCells.length);
+        const selectedDiv = selectedGrid.querySelector(`#${selectedGrid.id}-${availableCells[randomIndex]}`);
+        if (selectedCells.includes(availableCells[randomIndex].toString())) {
+            selectedDiv.style.backgroundColor = 'gray';
+            score--;
+            scoreElement.textContent = score;
+            if (score === 0) {
+                statusBox.textContent = `${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)} Player Loses!`;
+                clearInterval(interval);
+                return;
+            }
+        }
+        availableCells.splice(randomIndex, 1);
+    }, 400);
+}
+
+// Initialize the game with red player's build phase
+handleBuildPhase();
+
+// Event listener for random button
+randomButton.addEventListener('click', () => {
+    handleRandomSelection();
+});
+
+// Event listener for restart button
+restartButton.addEventListener('click', () => {
+    location.reload();
+});
 
     function switchTurn() {
         clearInterval(interval);

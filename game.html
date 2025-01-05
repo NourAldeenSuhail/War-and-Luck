@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="statusBox" class="status-box">Red Player's Turn</div>
+    <div id="statusBox" class="status-box">Red Player's Turn to Build</div>
     <div class="container">
       <div class="play-area" id="blueArea">
         <div class="label blue">Blue Player's Area</div>
@@ -18,8 +18,21 @@
         <div class="grid" id="grid1"></div>
       </div>
       <div>
-        <button id="randomButton" class="button red">Select Random Box</button>
+        <button id="buildButton" class="button red">Build</button>
+        <button id="randomButton" class="button red" style="display: none;">Select Random Box</button>
         <button id="restartButton" class="button">Restart Game</button>
+      </div>
+      <div id="scoreBoard">
+        <table>
+          <tr>
+            <th>Red Player</th>
+            <th>Blue Player</th>
+          </tr>
+          <tr>
+            <td id="redScore">6</td>
+            <td id="blueScore">6</td>
+          </tr>
+        </table>
       </div>
     </div>
     <script src="script.js"></script>

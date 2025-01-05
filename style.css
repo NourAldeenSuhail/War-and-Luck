@@ -30,6 +30,10 @@ body {
   box-shadow: black 3px 4px 8px;
 }
 
+#grid2 div {
+  pointer-events: none;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(5, 50px);
@@ -42,6 +46,21 @@ body {
   height: 50px;
   background-color: lightgreen;
   border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.grid div:hover {
+  background-color: lightblue;
+}
+
+.grid div.disabled {
+  cursor: not-allowed;
+  background-color: lightgreen;
+}
+
+.button.blue {
+  background-color: rgb(56, 56, 255);
+  color: white;
 }
 
 .button {
@@ -84,4 +103,19 @@ body {
 #restartButton {
   background-color: gray;
   color: white;
+}
+#scoreBoard {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#scoreBoard table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#scoreBoard th, #scoreBoard td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 18px;
 }
