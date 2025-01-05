@@ -1,12 +1,12 @@
-*{
-    box-sizing: border-box;
-    margin: 0px;
+* {
+  box-sizing: border-box;
+  margin: 0px;
 }
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height:100dvh;
+  height: 100dvh;
   background-color: beige;
   font-family: Arial, sans-serif;
   box-sizing: border-box;
@@ -114,7 +114,8 @@ body {
   border-collapse: collapse;
 }
 
-#scoreBoard th, #scoreBoard td {
+#scoreBoard th,
+#scoreBoard td {
   border: 1px solid #ccc;
   padding: 10px;
   font-size: 18px;
