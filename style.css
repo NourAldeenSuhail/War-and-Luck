@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   margin: 0px;
+  font-family: cursive;
 }
 body {
   display: flex;
@@ -8,7 +9,6 @@ body {
   align-items: center;
   height: 100dvh;
   background-color: beige;
-  font-family: Arial, sans-serif;
   box-sizing: border-box;
 }
 
@@ -49,6 +49,15 @@ body {
   cursor: pointer;
 }
 
+#grid1,
+#grid2 {
+  pointer-events: none;
+}
+
+#grid1 div,
+#grid2 div {
+  pointer-events: auto;
+}
 .grid div:hover {
   background-color: lightblue;
 }
@@ -70,7 +79,10 @@ body {
   cursor: pointer;
   border-radius: 10px;
 }
-.button:hover {
+#restartButton:hover {
+  box-shadow: inset 1px 1px 5px white;
+}
+#randomButton:hover {
   box-shadow: inset 1px 1px 5px white;
 }
 
@@ -90,10 +102,11 @@ body {
 }
 
 #statusBox {
-  margin: 20px;
+  margin: 25px;
   padding: 10px;
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 800;
   border: 3px solid #ccc;
   background-color: rgb(194, 119, 94);
   border-radius: 10px;
@@ -114,9 +127,24 @@ body {
   border-collapse: collapse;
 }
 
-#scoreBoard th,
-#scoreBoard td {
+#scoreBoard th {
   border: 1px solid #ccc;
   padding: 10px;
-  font-size: 18px;
+  background-color: whitesmoke;
+}
+#redScore {
+  background-color: rgb(238, 43, 43);
+  font-weight: 900;
+  font-size: 30px;
+  color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+#blueScore {
+  background-color: rgb(56, 56, 255);
+  font-weight: 900;
+  font-size: 30px;
+  color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
 }

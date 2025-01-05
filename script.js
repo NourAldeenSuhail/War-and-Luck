@@ -14,7 +14,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const buildButton = document.getElementById("buildButton");
   let selectedCells1 = [];
   let selectedCells2 = [];
-  const letters = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "d"];
+  const icons = [
+    "<i class='fas fa-ambulance' style='font-size:40px;color:gray'></i>",
+    "<i class='fas fa-bomb' style='font-size:40px;color:gray'></i>",
+    "<i class='fas fa-car' style='font-size:40px;color:gray'></i>",
+    "<i class='fas fa-child' style='font-size:40px;color:gray'></i>",
+    "<i class='fas fa-city' style='font-size:40px;color:gray'></i>",
+    "<i class='fas fa-landmark' style='font-size:40px;color:gray'></i>",
+    "<i class='fas fa-snowplow' style='font-size:40px;color:gray'></i>",
+    "<i class='fas fa-fighter-jet' style='font-size:40px;color:gray'></i>",
+    "<i class='fas fa-helicopter' style='font-size:40px;color:gray'></i>",
+    "<i class='fas fa-pastafarianism' style='font-size:40px;color:gray'></i>",
+    "<i class='fab fa-pied-piper-alt' style='font-size:40px;color:gray'></i>",
+    "<i class='fas fa-spider' style='font-size:40px;color:gray'></i>",
+  ];
+
   const redScoreElement = document.getElementById("redScore");
   const blueScoreElement = document.getElementById("blueScore");
   let redScore = 6;
@@ -58,8 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedCells.length < 6 &&
         !event.target.classList.contains("disabled")
       ) {
-        let randomLetter = letters[Math.floor(Math.random() * letters.length)];
-        event.target.textContent = randomLetter;
+        let randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        event.target.innerHTML = randomIcon; // إضافة أيقونة عشوائية
         event.target.classList.add("disabled");
         selectedCells.push(event.target.id.split("-")[1]);
         // لا تقم بإزالة المربع من المصفوفة المتاحة
@@ -96,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPlayer = currentPlayer === "red" ? "blue" : "red";
     statusBox.textContent = `${
       currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)
-    } Player's Turn to Build`;
+    } Player's Build`;
     if (currentPlayer === "blue") {
       buildButton.classList.remove("red");
       buildButton.classList.add("blue");
@@ -105,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       buildButton.style.display = "none";
       randomButton.style.display = "inline-block";
-      statusBox.textContent = "Red Player's Turn";
+      statusBox.textContent = "Red Player's Shot";
     }
   }
 
@@ -135,9 +149,9 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       finalDiv.style.backgroundColor = "gray";
       availableCells.splice(lastSelectedIndex, 1);
-  
-      // Check if the selected cell contains a letter
-      if (finalDiv.textContent) {
+
+      // Check if the selected cell contains an icon
+      if (finalDiv.querySelector("i")) {
         if (currentPlayer === "red") {
           blueScore--; // خصم النقطة من اللاعب الثاني
           blueScoreElement.textContent = blueScore;
@@ -145,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
           redScore--; // خصم النقطة من اللاعب الثاني
           redScoreElement.textContent = redScore;
         }
-  
+
         // Check if any player has lost
         if (redScore === 0 || blueScore === 0) {
           const winner = redScore === 0 ? "Blue" : "Red";
@@ -163,12 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
       randomButton.classList.add(currentPlayer);
       statusBox.textContent = `${
         currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)
-      } Player's Turn`;
+      } Player's Shot`;
       countdownTime = 15;
     }, 2000);
   }
-  
-  
+
   randomButton.addEventListener("click", () => {
     if (
       randomButton.classList.contains("red") ||
@@ -180,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let selectedGrid = currentPlayer === "red" ? grid2 : grid1; // تعديل الساحة للاختيار العشوائي
       let availableCells =
         currentPlayer === "red" ? availableCells2 : availableCells1; // تعديل الساحة للاختيار العشوائي
-  
+
       interval = setInterval(() => {
         if (availableCells.length === 0) {
           clearInterval(interval);
@@ -198,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedDiv.style.backgroundColor = "gray";
         lastSelectedIndex = randomIndex;
       }, 400);
-  
+
       countdownInterval = setInterval(() => {
         countdownTime--;
         statusBox.textContent = `Launching... ${countdownTime}s`;
@@ -210,14 +223,13 @@ document.addEventListener("DOMContentLoaded", () => {
       switchTurn();
     }
   });
-  
 
   restartButton.addEventListener("click", () => {
     clearInterval(interval);
     clearInterval(countdownInterval);
     randomButton.className = "button red";
     statusBox.className = "status-box";
-    statusBox.textContent = "Red Player's Turn";
+    statusBox.textContent = "Red Player's Shot";
     currentPlayer = "red";
     countdownTime = 15;
     availableCells1 = Array.from({ length: 20 }, (_, i) => i);
